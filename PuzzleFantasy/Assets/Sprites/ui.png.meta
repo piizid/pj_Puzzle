@@ -24,6 +24,7 @@ TextureImporter:
     21300038: ui_19
     21300040: ui_20
     21300042: ui_21
+    21300044: ui_22
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -128,14 +129,24 @@ TextureImporter:
     - name: ui_6
       rect:
         serializedVersion: 2
-        x: 168
-        y: 837
-        width: 150
-        height: 26
+        x: 86
+        y: 844
+        width: 25
+        height: 25
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: ui_7
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 843
+        width: 170
+        height: 25
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ui_8
       rect:
         serializedVersion: 2
         x: 335
@@ -145,7 +156,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: ui_8
+    - name: ui_9
       rect:
         serializedVersion: 2
         x: 392
@@ -155,7 +166,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: ui_9
+    - name: ui_10
       rect:
         serializedVersion: 2
         x: 460
@@ -165,7 +176,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: ui_10
+    - name: ui_11
       rect:
         serializedVersion: 2
         x: 549
@@ -175,7 +186,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: ui_11
+    - name: ui_12
       rect:
         serializedVersion: 2
         x: 674
@@ -185,7 +196,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: ui_12
+    - name: ui_13
       rect:
         serializedVersion: 2
         x: 761
@@ -195,7 +206,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: ui_13
+    - name: ui_14
       rect:
         serializedVersion: 2
         x: 112
@@ -205,7 +216,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: ui_14
+    - name: ui_15
       rect:
         serializedVersion: 2
         x: 169
@@ -215,7 +226,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: ui_15
+    - name: ui_16
       rect:
         serializedVersion: 2
         x: 237
@@ -225,7 +236,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: ui_16
+    - name: ui_17
       rect:
         serializedVersion: 2
         x: 326
@@ -235,7 +246,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: ui_17
+    - name: ui_18
       rect:
         serializedVersion: 2
         x: 468
@@ -245,7 +256,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: ui_18
+    - name: ui_19
       rect:
         serializedVersion: 2
         x: 557
@@ -255,7 +266,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: ui_19
+    - name: ui_20
       rect:
         serializedVersion: 2
         x: 470
@@ -265,7 +276,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: ui_20
+    - name: ui_21
       rect:
         serializedVersion: 2
         x: 559
@@ -275,7 +286,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: ui_21
+    - name: ui_22
       rect:
         serializedVersion: 2
         x: 341

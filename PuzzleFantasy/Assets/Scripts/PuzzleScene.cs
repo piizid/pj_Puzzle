@@ -22,6 +22,7 @@ public class PuzzleScene : MonoBehaviour {
     NodeInfo[] _NodeTypeList;
 
     public GameObject _LinePrefab;
+	public GameObject _CirclePrefab;
 
     void Awake()
     {

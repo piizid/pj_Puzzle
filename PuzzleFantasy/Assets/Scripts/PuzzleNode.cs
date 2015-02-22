@@ -71,10 +71,16 @@ public class PuzzleNode : MonoBehaviour
         if (_isLive == false)
             return;
 
-        if ( _SelectNodeStack.Count <= 0)
-            select();
-        else if ( _isSelect )
+        if (_SelectNodeStack.Count <= 0) {
+			select ();
+			return;
+		}
+
+        if ( _isSelect )
         {
+			if( _SelectNodeStack.Count == 1 && _SelectNodeStack.Peek() == this )
+				return;
+
             PuzzleNode topNode = _SelectNodeStack.Pop();
             if (_SelectNodeStack.Peek() == this)
                 topNode.releaseNode();
@@ -85,7 +91,7 @@ public class PuzzleNode : MonoBehaviour
                  _nodeInfo._type == _SelectNodeStack.Peek()._nodeInfo._type )
         {
             select();
-        }      
+        }
     }
 
     void select()
@@ -94,6 +100,9 @@ public class PuzzleNode : MonoBehaviour
         _SelectNodeStack.Push(this);
         _isSelect = true;
         _IconAnimator.SetBool("Select", true);
+
+		RectTransform rect = gameObject.GetComponent< RectTransform > ();
+		LineManager._Instance.AddLine (transform.position);
     }
 
     public void ReleaseSelect()
