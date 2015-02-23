@@ -30,7 +30,12 @@ public class LineManager : MonoBehaviour {
 
 	public void AddLine( Vector3 position )
 	{
-		GameObject newCircle = Instantiate (PuzzleScene._Instance._CirclePrefab, transform.position, transform.rotation) as GameObject;
+		GameObject newCircle = null;
+		if (_circleQueue.Count > 0) {
+			newCircle = _circleQueue.Dequeue ();
+			newCircle.SetActive (true);
+		} else
+			newCircle = Instantiate (PuzzleScene._Instance._CirclePrefab, transform.position, transform.rotation) as GameObject;
 
 		newCircle.transform.parent = this.transform;
 		newCircle.transform.position = Vector3.zero;
@@ -39,10 +44,17 @@ public class LineManager : MonoBehaviour {
 
 		newCircle.transform.position = position;
 
+		_acitiveCircleList.Push (newCircle);
 	}
 
 	public void RemoveLine()
 	{
+		if( _acitiveCircleList.Count <= 0 )
+			return;
+
+	    GameObject circle =	_acitiveCircleList.Pop ();
+		circle.SetActive (false);
+		_circleQueue.Enqueue (circle);
 	}
 
 }

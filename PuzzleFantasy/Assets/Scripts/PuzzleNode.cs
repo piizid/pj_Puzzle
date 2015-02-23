@@ -132,6 +132,7 @@ public class PuzzleNode : MonoBehaviour
         while (queue.Count > 0)
         {
             queue.Dequeue().Hit();
+
             yield return new WaitForSeconds(0.01f);            
         }
     }
@@ -141,6 +142,7 @@ public class PuzzleNode : MonoBehaviour
         _CircleAnimator.SetBool("Select", false);
         _IconAnimator.SetBool("Select", false );
         _isSelect = false;
+		LineManager._Instance.RemoveLine();
     }
 
     void Update()
@@ -193,5 +195,6 @@ public class PuzzleNode : MonoBehaviour
     public void Hit()
     {
         _CircleAnimator.SetTrigger("Dead");
+		LineManager._Instance.RemoveLine();
     }
 }
