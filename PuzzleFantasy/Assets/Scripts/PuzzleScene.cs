@@ -48,11 +48,18 @@ public class PuzzleScene : MonoBehaviour {
 
     public void PuzzleStart()
     {
-
+        foreach (var node in _puzzleNodeList)
+        {
+            node.NodeStart();
+        }
     }
 
     public void PuzzleEnd()
     {
+        foreach (var node in _puzzleNodeList)
+        {
+            node.NodeEnd();
+        }
     }
 
 
@@ -60,16 +67,13 @@ public class PuzzleScene : MonoBehaviour {
     {
         if (Input.GetKeyUp(KeyCode.Alpha1))
         {
-            foreach (var node in _puzzleNodeList)
-            {
-                node.NodeStart();
-            }
+            PuzzleStart();
         }
         else if (Input.GetKeyUp(KeyCode.Alpha2))
         {
-            foreach (var node in _puzzleNodeList)
-                node.NodeEnd();
+            PuzzleEnd();
         }
 
     }
+
 }
