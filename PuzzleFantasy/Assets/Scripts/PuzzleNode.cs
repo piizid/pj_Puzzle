@@ -101,7 +101,7 @@ public class PuzzleNode : MonoBehaviour
         _isSelect = true;
         _IconAnimator.SetBool("Select", true);
 
-		RectTransform rect = gameObject.GetComponent< RectTransform > ();
+		//RectTransform rect = gameObject.GetComponent< RectTransform > ();
 		LineManager._Instance.AddLine (transform.position);
     }
 

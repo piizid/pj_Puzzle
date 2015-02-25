@@ -13,6 +13,14 @@ public class NodeInfo
 }
 
 public class PuzzleScene : MonoBehaviour {
+
+    [SerializeField]
+    BattleManager _battleManager;
+
+    public string _testStage;
+    public CharacterState _testState;
+    public CharacterInfo _testInfo;
+
     static PuzzleScene _instance = null;
     public static PuzzleScene _Instance { get { return _instance; } }
 
@@ -24,6 +32,8 @@ public class PuzzleScene : MonoBehaviour {
     public GameObject _LinePrefab;
 	public GameObject _CirclePrefab;
 
+    bool _puzzlePlaying = false;
+
     void Awake()
     {
         if (_instance != null)
@@ -33,6 +43,13 @@ public class PuzzleScene : MonoBehaviour {
 
         for (int i = 0; i < _NodeTypeList.Length; i++)
             _NodeTypeList[i]._type = i;
+
+        _battleManager._phaseChangeEvent = this.battlePhaseChange;
+    }
+
+    void Start()
+    {
+        _battleManager.Initialize(_testStage, _testState, _testInfo);
     }
 
     public NodeInfo GetRandomNode()
@@ -48,6 +65,9 @@ public class PuzzleScene : MonoBehaviour {
 
     public void PuzzleStart()
     {
+        if (_puzzlePlaying)
+            return;
+
         foreach (var node in _puzzleNodeList)
         {
             node.NodeStart();
@@ -56,6 +76,9 @@ public class PuzzleScene : MonoBehaviour {
 
     public void PuzzleEnd()
     {
+        if (_puzzlePlaying == false)
+            return;
+
         foreach (var node in _puzzleNodeList)
         {
             node.NodeEnd();
@@ -67,13 +90,25 @@ public class PuzzleScene : MonoBehaviour {
     {
         if (Input.GetKeyUp(KeyCode.Alpha1))
         {
-            PuzzleStart();
+            _battleManager.StageStart();
+            //PuzzleStart();
         }
         else if (Input.GetKeyUp(KeyCode.Alpha2))
         {
-            PuzzleEnd();
+            //PuzzleEnd();
         }
-
     }
 
+    void battlePhaseChange(BATTLEPHASE newPhase)
+    {
+        switch (newPhase)
+        {
+            case BATTLEPHASE.BATTLE:
+                PuzzleStart();
+                break;
+            default:
+                PuzzleEnd();
+                break;
+        }
+    }
 }
