@@ -123,6 +123,8 @@ public class PuzzleNode : MonoBehaviour
                 node._isLive = false;
                 queue.Enqueue(node);
             }
+            
+            PuzzleScene._Instance.HitNodes( queue.Peek()._nodeInfo._NodeType, queue.Count );
             StartCoroutine(hit(queue));
         }
     }

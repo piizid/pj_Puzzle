@@ -32,7 +32,7 @@ public class CharacterModel : MonoBehaviour {
     static int CODE_HIT = Animator.StringToHash("Base Layer.HIT");
     static int CODE_DEAD = Animator.StringToHash("Base Layer.DEAD");
 
-    const string TRIGGER_NORMALATTACK = "MormalAttack";
+    const string TRIGGER_NORMALATTACK = "NormalAttack";
     const string TRIGGER_MAGICATTACK = "MagicAttack";
     const string TRIGGER_SKILL_0 = "Skill_0";
     const string TRIGGER_SKILL_1 = "Skill_1";

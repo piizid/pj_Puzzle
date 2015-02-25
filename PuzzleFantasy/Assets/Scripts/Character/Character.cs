@@ -50,6 +50,9 @@ public class Character : MonoBehaviour
     [SerializeField]
     CharacterModel _Model = null;
 
+    [SerializeField]
+    HUD _hud = null;
+
     int _PuzzlePoint;
 
     public Character _Target
@@ -75,9 +78,34 @@ public class Character : MonoBehaviour
             return false;
 
         _State = newState;
+
+        if (_hud != null)
+            _hud.SetState(newState);
         return _Model.Initialize(newInfo._sprite, newInfo._controller);
     }
 
+    public void Action(NODETYPE type, int point)
+    {
+        _PuzzlePoint = point;
+        switch (type)
+        {
+            case NODETYPE.NORMALATTACK:
+                _Model.Start_Motion(MODELMOTION.NORMALATTACK);
+                break;
+            case NODETYPE.MAGICATTACK:
+                _Model.Start_Motion(MODELMOTION.MAGICATTACK);
+                break;
+            case NODETYPE.SKILL_0:
+                _Model.Start_Motion(MODELMOTION.SKILL_0);
+                break;
+            case NODETYPE.SKILL_1:
+                _Model.Start_Motion(MODELMOTION.SKILL_1);
+                break;
+            case NODETYPE.SKILL_2:
+                _Model.Start_Motion(MODELMOTION.SKILL_2);
+                break;
+        }
+    }
 
     public void Attack( ATTACKTYPE type, int point )
     {
@@ -92,7 +120,6 @@ public class Character : MonoBehaviour
                 point *= _State._MagicPoint;
                 break;
         }
-
         _target.RecvAttack(type, point);
     }
 
@@ -112,6 +139,7 @@ public class Character : MonoBehaviour
         }
 
         point = Mathf.Max(0, point - defencePoint);
+        _hud.CreateDamageFont(point);
 
         _State._CurrentHP = Mathf.Max(0, _State._CurrentHP - point);
 
@@ -142,7 +170,7 @@ public class Character : MonoBehaviour
         switch (motionEvent)
         {
             case MOTIONEVENT.EVENT:
-                Attack(type, 5);
+                Attack(type, _PuzzlePoint);
                 break;
         }
     }
@@ -152,8 +180,10 @@ public class Character : MonoBehaviour
         switch (motionEvent)
         {
             case MOTIONEVENT.EVENT:
-                if (_DeadEvent != null)
-                    _DeadEvent();
+                {
+                    if (_DeadEvent != null)
+                        _DeadEvent();
+                }
                 break;
         }
     }

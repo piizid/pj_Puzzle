@@ -2,6 +2,16 @@
 using System.Collections;
 using System.Collections.Generic;
 
+
+public enum NODETYPE
+{
+    NORMALATTACK,
+    MAGICATTACK,
+    SKILL_0,
+    SKILL_1,
+    SKILL_2
+}
+
 [System.Serializable]
 public class NodeInfo
 {
@@ -10,6 +20,9 @@ public class NodeInfo
     public int _type;
 
     public GameObject _prefab;
+
+
+    public NODETYPE _NodeType;
 }
 
 public class PuzzleScene : MonoBehaviour {
@@ -111,4 +124,13 @@ public class PuzzleScene : MonoBehaviour {
                 break;
         }
     }
+
+    public void HitNodes(NODETYPE type, int count)
+    {
+        Debug.Log("Type : " + type.ToString() + ", Count : " + count.ToString());
+        _battleManager.PlayerAction(type, count);
+    }
+
+
+  
 }

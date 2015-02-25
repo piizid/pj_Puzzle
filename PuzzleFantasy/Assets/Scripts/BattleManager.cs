@@ -141,6 +141,11 @@ public class BattleManager : MonoBehaviour
 
     }
 
+    void StageClear()
+    {
+
+    }
+
     void monsterDead()
     {
         if (_currentStage >= _stageInfo._StageCount)
@@ -152,11 +157,10 @@ public class BattleManager : MonoBehaviour
             set_Phase(BATTLEPHASE.MOVE);
             _backGround.MoveStart();
         }
-
     }
 
-    void StageClear()
+    public void PlayerAction(NODETYPE type, int count)
     {
-
+        _PlayerCharacter.Action(type, count);
     }
 }
