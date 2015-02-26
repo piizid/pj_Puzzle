@@ -21,12 +21,13 @@ public class BattleManager : MonoBehaviour
 
     float _moveStartTime;
     int _currentStage;
+    int _nextMonsterLevel;
 
     [SerializeField]
-    Character _PlayerCharacter;
+    Character_Player _PlayerCharacter;
 
     [SerializeField]
-    Character _MonsterCharacter;
+    Character_Monster _MonsterCharacter;
 
     [SerializeField]
     GameObject _backGroundParent;
@@ -37,8 +38,7 @@ public class BattleManager : MonoBehaviour
 
     StageInfo _stageInfo;
 
-
-    public bool Initialize(string stageName, CharacterState playerState, CharacterInfo playerInfo )
+    public bool Initialize(string stageName, CharacterInfo playerInfo, CharacterState_Player playerState)
     {
         StageInfo info = StageTable._Instance.GetStageInfo(stageName);
         if (info == null)
@@ -47,7 +47,7 @@ public class BattleManager : MonoBehaviour
         _stageInfo = info;
         CharacterCreater._Instance.SetStageCharacterInfo(info._spriteInfos);
 
-        _PlayerCharacter.InitializeCharacter(playerState, playerInfo);
+        _PlayerCharacter.InitializeCharacter(playerInfo, playerState);
         _MonsterCharacter.gameObject.SetActive(false);
 
         GameObject backGround = Instantiate(_stageInfo._BackGround) as GameObject;
@@ -61,11 +61,13 @@ public class BattleManager : MonoBehaviour
         _backGround = backGround.GetComponent<BackGround>();
         _backGround.MoveStop();
 
-        _PlayerCharacter._Target = _MonsterCharacter;
-        _MonsterCharacter._Target = _PlayerCharacter;
+        _PlayerCharacter.SetTarget(_MonsterCharacter);
+        _MonsterCharacter.SetTarget(_PlayerCharacter);
 
         _PlayerCharacter._DeadEvent = this.playerDead;
         _MonsterCharacter._DeadEvent = this.monsterDead;
+
+        _nextMonsterLevel = _stageInfo._StartLevel;
 
         return true;
     }
@@ -124,15 +126,12 @@ public class BattleManager : MonoBehaviour
 
     void createNewMonster()
     {
-        int level = _stageInfo._StartLevel + (_stageInfo._MonsterLevelUp * _currentStage);
-        level = Random.Range(Mathf.Max(0, level - _stageInfo._LevelInterval), Mathf.Max(0, level + _stageInfo._LevelInterval));
-        MONSTERTYPE type = (Random.Range(0, 2) == 0) ? MONSTERTYPE.NORMAL : MONSTERTYPE.MAGIC;
-        float rate = (float)_currentStage / _stageInfo._StageCount;
+        bool boss = (_currentStage % _stageInfo._BossLevel == 0);
 
-        CharacterInfo info = CharacterCreater._Instance.GetNewInfo(rate, type);
-        CharacterState state = CharacterCreater._Instance.GetNewState(level, type);
+        CharacterState_Monster monster = CharacterCreater._Instance.GetNewState(_nextMonsterLevel, boss);
+        CharacterInfo info = CharacterCreater._Instance.GetNewInfo(monster._ElementType, boss);
 
-        _MonsterCharacter.InitializeCharacter(state, info);
+        _MonsterCharacter.InitializeCharacter(info, monster);
         _MonsterCharacter.gameObject.SetActive(true);
     }
 

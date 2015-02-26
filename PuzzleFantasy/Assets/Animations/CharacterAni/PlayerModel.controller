@@ -20,24 +20,6 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: Skill_0
-    m_Type: 9
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
-  - m_Name: Skill_1
-    m_Type: 9
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
-  - m_Name: Skill_2
-    m_Type: 9
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
   - m_Name: Hit
     m_Type: 9
     m_DefaultFloat: 0
@@ -45,6 +27,18 @@ AnimatorController:
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
   - m_Name: Dead
+    m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
+  - m_Name: Heal
+    m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
+  - m_Name: Coin
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -75,7 +69,7 @@ Transition:
   m_TransitionOffset: 0
   m_Conditions:
   - m_ConditionMode: 5
-    m_ConditionEvent: 
+    m_ConditionEvent: Heal
     m_EventTreshold: 0
     m_ExitTime: .949999988
   m_Atomic: 1
@@ -222,7 +216,7 @@ State:
   m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: DEAD
+  m_Name: Dead
   m_Speed: 1
   m_CycleOffset: 0
   m_Motions:
@@ -267,7 +261,7 @@ State:
   m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: HIT
+  m_Name: HIt
   m_Speed: 1
   m_CycleOffset: 0
   m_Motions:
@@ -295,10 +289,6 @@ StateMachine:
   m_ChildStateMachinePosition: []
   m_OrderedTransitions:
     data:
-      first: {fileID: 110299444}
-      second:
-      - {fileID: 110112256}
-    data:
       first: {fileID: 110207792}
       second:
       - {fileID: 110163662}
@@ -306,13 +296,20 @@ StateMachine:
       - {fileID: 110167236}
       - {fileID: 110133630}
     data:
+      first: {fileID: 110242344}
+      second:
+      - {fileID: 110126320}
+    data:
       first: {fileID: 110260020}
       second:
       - {fileID: 110131222}
     data:
-      first: {fileID: 110242344}
+      first: {fileID: 110299444}
       second:
-      - {fileID: 110126320}
+      - {fileID: 110112256}
+    data:
+      first: {fileID: 110217792}
+      second: []
   m_MotionSetCount: 1
   m_AnyStatePosition: {x: -108, y: -36, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}

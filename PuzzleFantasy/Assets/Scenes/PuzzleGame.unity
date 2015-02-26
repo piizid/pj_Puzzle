@@ -73,7 +73,6 @@ NavMeshSettings:
     minRegionArea: 2
     widthInaccuracy: 16.666666
     heightInaccuracy: 10
-    tileSizeHint: 0
   m_NavMesh: {fileID: 0}
 --- !u!1 &6786502
 GameObject:
@@ -576,7 +575,7 @@ RectTransform:
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
   m_AnchoredPosition: {x: -80, y: 0}
-  m_SizeDelta: {x: 160, y: 60}
+  m_SizeDelta: {x: 160, y: 50}
   m_Pivot: {x: 0, y: .5}
 --- !u!114 &49341869
 MonoBehaviour:
@@ -593,7 +592,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 7cb2912222469634ba17a77055919ea8, type: 3}
+    m_Font: {fileID: 12800000, guid: 24347fad9e0614043b5a27baae33b7d1, type: 3}
     m_FontSize: 15
     m_FontStyle: 0
     m_BestFit: 1
@@ -801,13 +800,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _battleManager: {fileID: 1876938230}
   _testStage: Forest
-  _testState:
-    _MaxHP: 50
-    _CurrentHP: 50
-    _AttackPoint: 2
-    _MagicPoint: 2
-    _AttackDefence: 1
-    _MagicDefence: 1
+  _testPlayerState:
+    _MaxHP: 5
+    _CurHP: 5
+    _MeleeAttack: 1
+    _MagicAttack: 1
+    _HealPoint: 1
+    _CoinPoint: 1
+    _MaxMP: 1
+    _CurMP: 1
+    _Luck: 1
   _testInfo:
     _Name: Player
     _sprite: {fileID: 21300000, guid: b47ba2dd6113c4e41be5e74bf1168180, type: 3}
@@ -817,18 +819,18 @@ MonoBehaviour:
     _type: 0
     _prefab: {fileID: 162062, guid: 86c56779b23d4db49bd420f5932022ea, type: 2}
     _NodeType: 0
-  - _Name: Defence
+  - _Name: Fire
     _type: 0
-    _prefab: {fileID: 173088, guid: fb102755f28db5044b005fb6aab9adae, type: 2}
-    _NodeType: 2
+    _prefab: {fileID: 170842, guid: 436685987b61eb642913afc1c3196322, type: 2}
+    _NodeType: 1
   - _Name: Heal
     _type: 0
     _prefab: {fileID: 165862, guid: 17a23841d7bba424585eb9dca6ee48d3, type: 2}
     _NodeType: 3
-  - _Name: Range
+  - _Name: Snow
     _type: 0
-    _prefab: {fileID: 151648, guid: 89f6aad1da14b5247b0757e5e2285621, type: 2}
-    _NodeType: 1
+    _prefab: {fileID: 198452, guid: e901e0cd14e9db64a83709b74ca20f3c, type: 2}
+    _NodeType: 2
   - _Name: Coin
     _type: 0
     _prefab: {fileID: 107812, guid: 77356b39df6c4df47afd0ff4487a4f7e, type: 2}
@@ -2377,19 +2379,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 366234060}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 244d68a32902bcf4c8c8927c6019238e, type: 3}
+  m_Script: {fileID: 11500000, guid: ceec9dd15d06e274ab6ceb2296f25bef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _CharacterSide: 1
-  _State:
+  _life:
     _MaxHP: 0
-    _CurrentHP: 0
-    _AttackPoint: 0
-    _MagicPoint: 0
-    _AttackDefence: 0
-    _MagicDefence: 0
+    _CurHP: 0
   _Model: {fileID: 1740862418}
-  _hud: {fileID: 1230512906}
+  _PuzzlePoint: 0
+  _AttackElement: 0
+  _state:
+    _MaxHP: 0
+    _CurHP: 0
+    _AttackPoint: 0
+    _AItype: 0
+    _ElementType: 0
+    _AttackTurn: 0
+    _AttackTime: 0
+    _RewardClass: 0
 --- !u!1001 &366928136
 Prefab:
   m_ObjectHideFlags: 0
@@ -3844,7 +3851,7 @@ RectTransform:
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
   m_AnchoredPosition: {x: -80, y: 0}
-  m_SizeDelta: {x: 160, y: 60}
+  m_SizeDelta: {x: 160, y: 50}
   m_Pivot: {x: 0, y: .5}
 --- !u!114 &530806823
 MonoBehaviour:
@@ -3861,7 +3868,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 7cb2912222469634ba17a77055919ea8, type: 3}
+    m_Font: {fileID: 12800000, guid: 24347fad9e0614043b5a27baae33b7d1, type: 3}
     m_FontSize: 15
     m_FontStyle: 0
     m_BestFit: 1
@@ -4507,8 +4514,8 @@ CircleCollider2D:
   m_Enabled: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Radius: 62.7999992
-  m_Center: {x: 73.2399979, y: -73.0400009}
+  m_Radius: 35.9000015
+  m_Center: {x: 40.4000015, y: -40.2000008}
 --- !u!1 &589730381
 GameObject:
   m_ObjectHideFlags: 0
@@ -7486,11 +7493,11 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: .196078435, g: .196078435, b: .196078435, a: 1}
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 7cb2912222469634ba17a77055919ea8, type: 3}
+    m_Font: {fileID: 12800000, guid: 24347fad9e0614043b5a27baae33b7d1, type: 3}
     m_FontSize: 56
     m_FontStyle: 0
     m_BestFit: 1
-    m_MinSize: 10
+    m_MinSize: 5
     m_MaxSize: 40
     m_Alignment: 4
     m_RichText: 1
@@ -8198,7 +8205,7 @@ RectTransform:
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
   m_AnchoredPosition: {x: -80, y: 0}
-  m_SizeDelta: {x: 160, y: 60}
+  m_SizeDelta: {x: 160, y: 50}
   m_Pivot: {x: 0, y: .5}
 --- !u!114 &1020956681
 MonoBehaviour:
@@ -8215,7 +8222,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 7cb2912222469634ba17a77055919ea8, type: 3}
+    m_Font: {fileID: 12800000, guid: 24347fad9e0614043b5a27baae33b7d1, type: 3}
     m_FontSize: 15
     m_FontStyle: 0
     m_BestFit: 1
@@ -8764,7 +8771,7 @@ RectTransform:
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
   m_AnchoredPosition: {x: -80, y: 0}
-  m_SizeDelta: {x: 160, y: 60}
+  m_SizeDelta: {x: 160, y: 50}
   m_Pivot: {x: 0, y: .5}
 --- !u!114 &1095683829
 MonoBehaviour:
@@ -8781,7 +8788,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 7cb2912222469634ba17a77055919ea8, type: 3}
+    m_Font: {fileID: 12800000, guid: 24347fad9e0614043b5a27baae33b7d1, type: 3}
     m_FontSize: 15
     m_FontStyle: 0
     m_BestFit: 1
@@ -8992,6 +8999,7 @@ RectTransform:
   - {fileID: 2075432226}
   - {fileID: 1876938226}
   - {fileID: 585329260}
+  - {fileID: 1416301373}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_AnchorMin: {x: 0, y: 0}
@@ -9010,8 +9018,8 @@ MonoBehaviour:
   m_Script: {fileID: 1301386320, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
+  ignoreReversedGraphics: 1
+  blockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -9459,17 +9467,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _NormalCharacterState:
-    _NormalAttackPerLevel: 3
-    _MagicAttackPerLevel: 1
-    _NormalDefencePerLevel: 2
-    _MagicDefencePerLevel: 1
-    _HPPerLevel: 7
-  _MagicCharacterState:
-    _NormalAttackPerLevel: 1
-    _MagicAttackPerLevel: 3
-    _NormalDefencePerLevel: 1
-    _MagicDefencePerLevel: 2
-    _HPPerLevel: 5
+    _MinAttackPerLevel: 1
+    _MaxAttackPerLevel: 1
+    _MinHPPerLevel: 5
+    _MaxHPPerLevel: 10
+    _MinRewardClassPerLevel: .300000012
+    _MaxRewardClassPerLevel: .5
+    _HaveElementRate: .5
+    _FireElementRate: .5
+    _MinTime: 0
+    _MaxTime: 0
+    _MinTurn: 0
+    _MaxTurn: 0
+  _BossCharacterState:
+    _MinAttackPerLevel: 1
+    _MaxAttackPerLevel: 1
+    _MinHPPerLevel: 5
+    _MaxHPPerLevel: 10
+    _MinRewardClassPerLevel: .300000012
+    _MaxRewardClassPerLevel: .5
+    _HaveElementRate: .5
+    _FireElementRate: .5
+    _MinTime: 0
+    _MaxTime: 0
+    _MinTurn: 0
+    _MaxTurn: 0
 --- !u!4 &1237143330
 Transform:
   m_ObjectHideFlags: 0
@@ -9515,7 +9537,7 @@ RectTransform:
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
   m_AnchoredPosition: {x: -80, y: 0}
-  m_SizeDelta: {x: 160, y: 60}
+  m_SizeDelta: {x: 160, y: 50}
   m_Pivot: {x: 0, y: .5}
 --- !u!114 &1245963853
 MonoBehaviour:
@@ -9532,7 +9554,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 7cb2912222469634ba17a77055919ea8, type: 3}
+    m_Font: {fileID: 12800000, guid: 24347fad9e0614043b5a27baae33b7d1, type: 3}
     m_FontSize: 15
     m_FontStyle: 0
     m_BestFit: 1
@@ -9729,6 +9751,72 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 1501880758}
   m_GameObject: {fileID: 1260210422}
+--- !u!1 &1270155698
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 224: {fileID: 1270155699}
+  - 222: {fileID: 1270155701}
+  - 114: {fileID: 1270155700}
+  m_Layer: 5
+  m_Name: Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1270155699
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1270155698}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1416301373}
+  m_RootOrder: 0
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: .5, y: .5}
+--- !u!114 &1270155700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1270155698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: .196078435, g: .196078435, b: .196078435, a: 1}
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 24347fad9e0614043b5a27baae33b7d1, type: 3}
+    m_FontSize: 56
+    m_FontStyle: 0
+    m_BestFit: 1
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 4
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: Reset
+--- !u!222 &1270155701
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1270155698}
 --- !u!1 &1289053883
 GameObject:
   m_ObjectHideFlags: 0
@@ -10950,6 +11038,134 @@ MonoBehaviour:
   _CircleAnimator: {fileID: 481827301}
   _LearNodeDist: .800000012
   _LearPuzzleNodeList: []
+--- !u!1 &1416301372
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 224: {fileID: 1416301373}
+  - 222: {fileID: 1416301377}
+  - 114: {fileID: 1416301376}
+  - 114: {fileID: 1416301375}
+  - 58: {fileID: 1416301374}
+  m_Layer: 5
+  m_Name: StartButton
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1416301373
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1416301372}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.00006843, y: 1.00006843, z: 1.00006843}
+  m_Children:
+  - {fileID: 1270155699}
+  m_Father: {fileID: 1156596319}
+  m_RootOrder: 4
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 144.600006, y: -30}
+  m_SizeDelta: {x: 80, y: 80}
+  m_Pivot: {x: 0, y: 1}
+--- !u!58 &1416301374
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1416301372}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Radius: 35.9000015
+  m_Center: {x: 40.4000015, y: -40.2000008}
+--- !u!114 &1416301375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1416301372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1392445389, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: .960784316, g: .960784316, b: .960784316, a: 1}
+    m_PressedColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
+    m_DisabledColor: {r: .784313738, g: .784313738, b: .784313738, a: .501960814}
+    m_ColorMultiplier: 1
+    m_FadeDuration: .100000001
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1416301376}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 78551189}
+        m_MethodName: PuzzleReset
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &1416301376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1416301372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+--- !u!222 &1416301377
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1416301372}
 --- !u!1001 &1429377993
 Prefab:
   m_ObjectHideFlags: 0
@@ -11089,19 +11305,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 1429476956}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 244d68a32902bcf4c8c8927c6019238e, type: 3}
+  m_Script: {fileID: 11500000, guid: 0946fa01d6f9cad4ebb000f89f0f5a78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _CharacterSide: 0
+  _life:
+    _MaxHP: 0
+    _CurHP: 0
+  _Model: {fileID: 312620863}
+  _PuzzlePoint: 0
+  _AttackElement: 0
   _State:
     _MaxHP: 0
-    _CurrentHP: 0
-    _AttackPoint: 0
-    _MagicPoint: 0
-    _AttackDefence: 0
-    _MagicDefence: 0
-  _Model: {fileID: 312620863}
-  _hud: {fileID: 1315720740}
+    _CurHP: 0
+    _MeleeAttack: 0
+    _MagicAttack: 0
+    _HealPoint: 0
+    _CoinPoint: 0
+    _MaxMP: 0
+    _CurMP: 0
+    _Luck: 0
 --- !u!1 &1431003512
 GameObject:
   m_ObjectHideFlags: 0
@@ -12271,44 +12493,35 @@ MonoBehaviour:
   _StageInfoList:
   - _StateName: Forest
     _StageCount: 20
-    _LevelInterval: 1
     _StartLevel: 1
-    _MonsterLevelUp: 1
-    _GoldBonus: 1
-    _ExpBonus: 1
+    _BossLevel: 5
+    _MinMonsterLevelUp: 1
+    _MaxMonsterLevelUp: 1
     _BackGround: {fileID: 146646, guid: d5476fc56a21d974abcae7adfaa52eed, type: 2}
     _spriteInfos:
-    - _minLevelrate: 0
-      _maxLevelrate: .5
-      _NormalCharacterInfoList:
-      - _Name: Fire_Mob
+      _None_Element_CharacterInfoList:
+      - _Name: Mob
+        _sprite: {fileID: 21300000, guid: 642aadd27240f684abd6d7c808df4ab7, type: 3}
+        _controller: {fileID: 9100000, guid: c8a492fb24c1a934fbed0e9dc3971f27, type: 2}
+      _Fire_Element_CharacterInfoList:
+      - _Name: FireMob
         _sprite: {fileID: 21300000, guid: f4744a7d8933d4b479a68b3406e70422, type: 3}
         _controller: {fileID: 9100000, guid: c8a492fb24c1a934fbed0e9dc3971f27, type: 2}
-      - _Name: Water_Mob
+      _Ice_Element_CharacterInfoList:
+      - _Name: IceMob
         _sprite: {fileID: 21300000, guid: 9981677ec415550429eaeb44fca58d87, type: 3}
         _controller: {fileID: 9100000, guid: c8a492fb24c1a934fbed0e9dc3971f27, type: 2}
-      _MagicCharacterInfoList:
-      - _Name: GoblinMage
-        _sprite: {fileID: 21300000, guid: 16448f03a8c280441b33a60203fa894e, type: 3}
+      _None_Element_Boss_CharacterInfoList:
+      - _Name: Boss
+        _sprite: {fileID: 21300000, guid: cf97371f61462c9428690f3443420311, type: 3}
         _controller: {fileID: 9100000, guid: c8a492fb24c1a934fbed0e9dc3971f27, type: 2}
-      - _Name: Box
-        _sprite: {fileID: 21300000, guid: 9c2de4db6ffe58747a04458b572a8968, type: 3}
+      _Fire_Element_Boss_CharacterInfoList:
+      - _Name: FireBoss
+        _sprite: {fileID: 21300000, guid: 2072dd7a90c72284095b2a834542565a, type: 3}
         _controller: {fileID: 9100000, guid: c8a492fb24c1a934fbed0e9dc3971f27, type: 2}
-    - _minLevelrate: .5
-      _maxLevelrate: 1
-      _NormalCharacterInfoList:
-      - _Name: Fire Spider
-        _sprite: {fileID: 21300000, guid: 0569297fba85c0943bd886a69c69811c, type: 3}
-        _controller: {fileID: 9100000, guid: c8a492fb24c1a934fbed0e9dc3971f27, type: 2}
-      - _Name: Water Spider
-        _sprite: {fileID: 21300000, guid: f78b342d8285aba4ab3b5c9196cc529e, type: 3}
-        _controller: {fileID: 9100000, guid: c8a492fb24c1a934fbed0e9dc3971f27, type: 2}
-      _MagicCharacterInfoList:
-      - _Name: Gagoil
-        _sprite: {fileID: 21300000, guid: 933b8d582a79bae418947da92a2c2184, type: 3}
-        _controller: {fileID: 9100000, guid: c8a492fb24c1a934fbed0e9dc3971f27, type: 2}
-      - _Name: Sprit
-        _sprite: {fileID: 21300000, guid: 2092a80a86847e346a05a4428668ca89, type: 3}
+      _Ice_Element_Boss_CharacterInfoList:
+      - _Name: IceBoss
+        _sprite: {fileID: 21300000, guid: 20c82f4b2cfbcb24381e78d2982b8369, type: 3}
         _controller: {fileID: 9100000, guid: c8a492fb24c1a934fbed0e9dc3971f27, type: 2}
 --- !u!4 &1590100287
 Transform:
@@ -16171,7 +16384,7 @@ RectTransform:
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
   m_AnchoredPosition: {x: -80, y: 0}
-  m_SizeDelta: {x: 160, y: 60}
+  m_SizeDelta: {x: 160, y: 50}
   m_Pivot: {x: 0, y: .5}
 --- !u!114 &2103352876
 MonoBehaviour:
@@ -16188,7 +16401,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 7cb2912222469634ba17a77055919ea8, type: 3}
+    m_Font: {fileID: 12800000, guid: 24347fad9e0614043b5a27baae33b7d1, type: 3}
     m_FontSize: 15
     m_FontStyle: 0
     m_BestFit: 1

@@ -7,9 +7,8 @@ public enum MODELMOTION
     IDLE,
     NORMALATTACK,
     MAGICATTACK,
-    SKILL_0,
-    SKILL_1,
-    SKILL_2,
+    HEAL,
+    COIN,
     HIT,
     DEAD,
 }
@@ -26,19 +25,17 @@ public class CharacterModel : MonoBehaviour {
     static int CODE_IDLE = Animator.StringToHash("Base Layer.IDLE");
     static int CODE_NORMALATTACK = Animator.StringToHash("Base Layer.NormalAttack");
     static int CODE_MAGICATTACK = Animator.StringToHash("Base Layer.MagicAttack");
-    static int CODE_SKILL_0 = Animator.StringToHash("Base Layer.Skill_0");
-    static int CODE_SKILL_1 = Animator.StringToHash("Base Layer.Skill_1");
-    static int CODE_SKILL_2 = Animator.StringToHash("Base Layer.Skill_2");
-    static int CODE_HIT = Animator.StringToHash("Base Layer.HIT");
-    static int CODE_DEAD = Animator.StringToHash("Base Layer.DEAD");
+    static int CODE_HEAL = Animator.StringToHash("Base Layer.Heal");
+    static int CODE_COIN = Animator.StringToHash("Base Layer.Coin");
+    static int CODE_HIT = Animator.StringToHash("Base Layer.Hit");
+    static int CODE_DEAD = Animator.StringToHash("Base Layer.Dead");
 
     const string TRIGGER_NORMALATTACK = "NormalAttack";
     const string TRIGGER_MAGICATTACK = "MagicAttack";
-    const string TRIGGER_SKILL_0 = "Skill_0";
-    const string TRIGGER_SKILL_1 = "Skill_1";
-    const string TRIGGER_SKILL_2 = "Skill_2";
-    const string TRIGGER_HIT = "Hit";
-    const string TRIGGER_DEAD = "Dead";
+    const string TRIGGER_Heal = "Heal";
+    const string TRIGGER_Coin = "Coin";
+    const string TRIGGER_Hit = "Hit";
+    const string TRIGGER_Dead = "Dead";
 
     public delegate void MotionnEvent( MODELMOTION motion, MOTIONEVENT motionEvent );
     public MotionnEvent _MotionEvent;
@@ -103,9 +100,8 @@ public class CharacterModel : MonoBehaviour {
         if (code == CODE_IDLE) return MODELMOTION.IDLE;
         if (code == CODE_MAGICATTACK) return MODELMOTION.MAGICATTACK;
         if( code == CODE_NORMALATTACK ) return MODELMOTION.NORMALATTACK;
-        if (code == CODE_SKILL_0) return MODELMOTION.SKILL_0;
-        if (code == CODE_SKILL_1) return MODELMOTION.SKILL_1;
-        if (code == CODE_SKILL_2) return MODELMOTION.SKILL_2;
+        if (code == CODE_HEAL) return MODELMOTION.HEAL;
+        if (code == CODE_COIN) return MODELMOTION.COIN;
         return MODELMOTION.IDLE;
     }
 
@@ -116,11 +112,10 @@ public class CharacterModel : MonoBehaviour {
         {
             case MODELMOTION.NORMALATTACK: triggerName = TRIGGER_NORMALATTACK; break;
             case MODELMOTION.MAGICATTACK:  triggerName = TRIGGER_MAGICATTACK;  break;
-            case MODELMOTION.SKILL_0:      triggerName = TRIGGER_SKILL_0;      break;
-            case MODELMOTION.SKILL_1:      triggerName = TRIGGER_SKILL_1;      break;
-            case MODELMOTION.SKILL_2:      triggerName = TRIGGER_SKILL_2;      break;
-            case MODELMOTION.HIT:          triggerName = TRIGGER_HIT;          break;
-            case MODELMOTION.DEAD:         triggerName = TRIGGER_DEAD;         break;
+            case MODELMOTION.HEAL:         triggerName = TRIGGER_Heal;      break;
+            case MODELMOTION.COIN:         triggerName = TRIGGER_Coin;      break;
+            case MODELMOTION.HIT:          triggerName = TRIGGER_Hit;          break;
+            case MODELMOTION.DEAD:         triggerName = TRIGGER_Dead;         break;
         }
         _anim.SetTrigger(triggerName);
     }

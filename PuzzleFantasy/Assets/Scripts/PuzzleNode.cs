@@ -27,6 +27,8 @@ public class PuzzleNode : MonoBehaviour
 
     bool _isSelect = false;
     bool _isLive = false;
+
+
     IEnumerator Start()
     {
         yield return null;

@@ -2,13 +2,15 @@
 using System.Collections;
 
 [System.Serializable]
-public struct StageCharacterInfo
+public class StageCharacterInfo
 {
-    public float _minLevelrate;
-    public float _maxLevelrate;
+    public CharacterInfo[] _None_Element_CharacterInfoList;
+    public CharacterInfo[] _Fire_Element_CharacterInfoList;
+    public CharacterInfo[] _Ice_Element_CharacterInfoList;
 
-    public CharacterInfo[] _NormalCharacterInfoList;
-    public CharacterInfo[] _MagicCharacterInfoList;
+    public CharacterInfo[] _None_Element_Boss_CharacterInfoList;
+    public CharacterInfo[] _Fire_Element_Boss_CharacterInfoList;
+    public CharacterInfo[] _Ice_Element_Boss_CharacterInfoList;
 }
 
 [System.Serializable]
@@ -17,16 +19,15 @@ public class StageInfo
     public string _StateName;
     public int _StageCount;
 
-    public int _LevelInterval = 1;
     public int _StartLevel = 1;
-    public int _MonsterLevelUp = 1;
+    public int _BossLevel = 5;
 
-    public float _GoldBonus = 1.0f;
-    public float _ExpBonus = 1.0f;
+    public int _MinMonsterLevelUp = 1;
+    public int _MaxMonsterLevelUp = 1;
 
     public GameObject _BackGround;
 
-    public StageCharacterInfo[] _spriteInfos;
+    public StageCharacterInfo _spriteInfos;
 }
 
 public class StageTable : MonoBehaviour  {

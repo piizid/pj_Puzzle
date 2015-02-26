@@ -1,18 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[System.Serializable]
-public class CharacterState
-{
-    public int _MaxHP;
-    public int _CurrentHP;
-
-    public int _AttackPoint;
-    public int _MagicPoint;
-
-    public int _AttackDefence;
-    public int _MagicDefence;
-}
 
 [System.Serializable]
 public class CharacterInfo
@@ -22,66 +10,51 @@ public class CharacterInfo
     public RuntimeAnimatorController _controller;
 }
 
-public enum ATTACKTYPE
-{
-    NORMAL,
-    MAGIC,
-}
-
-public enum SIDE
-{
-    LEFT,
-    RIGHT,
-}
-
-public class Character : MonoBehaviour 
+public abstract class Character : MonoBehaviour 
 {
     public delegate void DeadEvent();
     public DeadEvent _DeadEvent;
 
-    [SerializeField]
-    SIDE _CharacterSide = SIDE.LEFT;
+    public delegate void HitEndEvent();
+    public HitEndEvent _HitEndEvent;
 
     [SerializeField]
-    CharacterState _State = new CharacterState();
-    
-    Character _target = null;
+    protected CharacterState_Life _life = new CharacterState_Life();
     
     [SerializeField]
-    CharacterModel _Model = null;
+    protected CharacterModel _Model = null;
 
     [SerializeField]
-    HUD _hud = null;
+    protected int _PuzzlePoint = 0;
 
-    int _PuzzlePoint;
+    [SerializeField]
+    protected ELEMENTTYPE _AttackElement;
 
-    public Character _Target
+    public string _CharacterName
     {
-        set { _target = value; }
+        get;
+        private set;
     }
+
 
     void Awake()
     {
         Transform model = transform.FindChild("Model");
         if (model)
             _Model = model.GetComponent<CharacterModel>();
-        _Model._MotionEvent = this.ModelEvent;
+        _Model._MotionEvent = this.modelEvent;
     }
 
-    void Start()
-    {
-    }
 
-    public bool InitializeCharacter( CharacterState newState, CharacterInfo newInfo )
+    protected bool InitializeCharacter( CharacterInfo info, CharacterState_Life newState )
     {
-        if (newState == null || newInfo == null)
+        if (newState == null || info == null )
             return false;
 
-        _State = newState;
+        _life = newState;
 
-        if (_hud != null)
-            _hud.SetState(newState);
-        return _Model.Initialize(newInfo._sprite, newInfo._controller);
+        _CharacterName = info._Name;
+        return _Model.Initialize( info._sprite, info._controller );
     }
 
     public void Action(NODETYPE type, int point)
@@ -91,86 +64,54 @@ public class Character : MonoBehaviour
         {
             case NODETYPE.NORMALATTACK:
                 _Model.Start_Motion(MODELMOTION.NORMALATTACK);
+                _AttackElement = ELEMENTTYPE.NONE;
                 break;
-            case NODETYPE.MAGICATTACK:
+            case NODETYPE.FIREATTACK:
+                _AttackElement = ELEMENTTYPE.FIRE;
                 _Model.Start_Motion(MODELMOTION.MAGICATTACK);
                 break;
-            case NODETYPE.SKILL_0:
-                _Model.Start_Motion(MODELMOTION.SKILL_0);
+            case NODETYPE.SNOWATTACK:
+                _AttackElement = ELEMENTTYPE.ICE;
+                _Model.Start_Motion(MODELMOTION.MAGICATTACK);
                 break;
-            case NODETYPE.SKILL_1:
-                _Model.Start_Motion(MODELMOTION.SKILL_1);
+            case NODETYPE.FIRESNOWATTACK:
+                _AttackElement = ELEMENTTYPE.NONE;
+                _Model.Start_Motion(MODELMOTION.MAGICATTACK);
                 break;
-            case NODETYPE.SKILL_2:
-                _Model.Start_Motion(MODELMOTION.SKILL_2);
+            case NODETYPE.HEAL:
+                _Model.Start_Motion(MODELMOTION.HEAL);
+                break;
+            case NODETYPE.COIN:
+                _Model.Start_Motion(MODELMOTION.COIN);
                 break;
         }
     }
 
-    public void Attack( ATTACKTYPE type, int point )
+    void modelEvent(MODELMOTION motion, MOTIONEVENT motionEvent)
     {
-        if (_target == null) return;
-
-        switch (type)
+        switch( motion )
         {
-            case ATTACKTYPE.NORMAL:
-                point *= _State._AttackPoint;
-                break;
-            case ATTACKTYPE.MAGIC:
-                point *= _State._MagicPoint;
-                break;
-        }
-        _target.RecvAttack(type, point);
-    }
-
-
-
-    public void RecvAttack(ATTACKTYPE type, int point)
-    {
-        int defencePoint = 0;
-        switch (type)
-        {
-            case ATTACKTYPE.NORMAL:
-                defencePoint = _State._AttackDefence;
-                break;
-            case ATTACKTYPE.MAGIC:
-                defencePoint = _State._MagicDefence;
-                break;
-        }
-
-        point = Mathf.Max(0, point - defencePoint);
-        _hud.CreateDamageFont(point);
-
-        _State._CurrentHP = Mathf.Max(0, _State._CurrentHP - point);
-
-        if (_State._CurrentHP > 0)
-            _Model.Start_Motion(MODELMOTION.HIT);
-        else
-            _Model.Start_Motion(MODELMOTION.DEAD);
-    }
-
-    void ModelEvent(MODELMOTION motion, MOTIONEVENT motionEvent)
-    {
-        switch (motion)
-        {
-            case MODELMOTION.NORMALATTACK:
-                AttackEvent(ATTACKTYPE.NORMAL, motionEvent);
-                break;
-            case MODELMOTION.MAGICATTACK:
-                AttackEvent(ATTACKTYPE.MAGIC, motionEvent);
-                break;
             case MODELMOTION.DEAD:
-                deadEvent(motionEvent);
+                deadEvent( motionEvent );
+                break;
+            case MODELMOTION.HIT:
+                hitEvent( motionEvent );
                 break;
         }
+        ModelEvent(motion, motionEvent);
     }
 
-    void AttackEvent(ATTACKTYPE type, MOTIONEVENT motionEvent)
+    abstract protected void ModelEvent(MODELMOTION motion, MOTIONEVENT motionEvent);
+
+    void hitEvent(MOTIONEVENT motionEvent)
     {
         switch (motionEvent)
         {
-            case MOTIONEVENT.EVENT:
-                Attack(type, _PuzzlePoint);
+            case MOTIONEVENT.END:
+                {
+                    if (_HitEndEvent != null)
+                        _HitEndEvent();
+                }
                 break;
         }
     }
@@ -187,5 +128,15 @@ public class Character : MonoBehaviour
                 break;
         }
     }
-    
+
+    protected void hit( int attackPoint )
+    {
+        _life._CurHP = Mathf.Max(0, _life._CurHP - attackPoint);
+
+        if (_life._CurHP > 0)
+            _Model.Start_Motion(MODELMOTION.HIT);
+        else
+            _Model.Start_Motion(MODELMOTION.DEAD);
+    }
 }
+

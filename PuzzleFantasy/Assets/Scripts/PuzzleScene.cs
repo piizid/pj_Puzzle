@@ -6,10 +6,11 @@ using System.Collections.Generic;
 public enum NODETYPE
 {
     NORMALATTACK,
-    MAGICATTACK,
-    SKILL_0,
-    SKILL_1,
-    SKILL_2
+    FIREATTACK,
+    SNOWATTACK,
+    HEAL,
+    COIN,
+    FIRESNOWATTACK,
 }
 
 [System.Serializable]
@@ -31,7 +32,7 @@ public class PuzzleScene : MonoBehaviour {
     BattleManager _battleManager;
 
     public string _testStage;
-    public CharacterState _testState;
+    public CharacterState_Player _testPlayerState;
     public CharacterInfo _testInfo;
 
     static PuzzleScene _instance = null;
@@ -62,7 +63,7 @@ public class PuzzleScene : MonoBehaviour {
 
     void Start()
     {
-        _battleManager.Initialize(_testStage, _testState, _testInfo);
+        _battleManager.Initialize(_testStage, _testInfo, _testPlayerState);
     }
 
     public NodeInfo GetRandomNode()
@@ -85,6 +86,7 @@ public class PuzzleScene : MonoBehaviour {
         {
             node.NodeStart();
         }
+        _puzzlePlaying = true;
     }
 
     public void PuzzleEnd()
@@ -96,6 +98,7 @@ public class PuzzleScene : MonoBehaviour {
         {
             node.NodeEnd();
         }
+        _puzzlePlaying = false;
     }
 
 
@@ -131,6 +134,16 @@ public class PuzzleScene : MonoBehaviour {
         _battleManager.PlayerAction(type, count);
     }
 
+    public void PuzzleReset()
+    {
+        StartCoroutine(puzzleReset());
+    }
 
+    IEnumerator puzzleReset()
+    {
+        PuzzleEnd();
+        yield return new WaitForSeconds(0.1f);
+        PuzzleStart();
+    }
   
 }
