@@ -9,11 +9,14 @@ public class DamageFont : MonoBehaviour {
         Destroy(gameObject);
     }
 
-    public void SetText(int damage)
+    public void SetText(int damage, Color color)
     {
         Text text = GetComponent<Text>();
 
         if (text != null)
+        {
             text.text = damage.ToString();
+            text.color = color;
+        }
     }
 }

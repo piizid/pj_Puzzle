@@ -133,6 +133,8 @@ public class BattleManager : MonoBehaviour
 
         _MonsterCharacter.InitializeCharacter(info, monster);
         _MonsterCharacter.gameObject.SetActive(true);
+
+        _nextMonsterLevel = Random.Range(_stageInfo._MinMonsterLevelUp, _stageInfo._MaxMonsterLevelUp + 1);
     }
 
     void playerDead()

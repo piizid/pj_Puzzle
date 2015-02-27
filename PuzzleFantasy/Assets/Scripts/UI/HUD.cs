@@ -8,12 +8,6 @@ public class HUD : MonoBehaviour {
     Text _HP;
 
     [SerializeField]
-    Text _AP;
-
-    [SerializeField]
-    Text _DP;
-
-    [SerializeField]
     Transform _DamageFontPos;
 
     [SerializeField]
@@ -22,10 +16,11 @@ public class HUD : MonoBehaviour {
     int _preHP;
 
     CharacterState_Life _life = null;
+   
 
-    public void SetState(CharacterState_Life state)
+    public void SetLife(CharacterState_Life life)
     {
-        _life = state;
+        _life = life;
         setText();
         gameObject.SetActive(true);
     }
@@ -52,22 +47,18 @@ public class HUD : MonoBehaviour {
 
     void setText()
     {
-        //if (_state == null)
-        //{
-        //    _HP.text = "";
-        //    _AP.text = "";
-        //    _DP.text = "";
-        //}
-        //else
-        //{
-        //    _HP.text = string.Format("{0} / {1}", _state._CurrentHP, _state._MaxHP);
-        //    _AP.text = string.Format("{0} / {1}", _state._AttackPoint, _state._MagicPoint);
-        //    _DP.text = string.Format("{0} / {1}", _state._AttackDefence, _state._MagicDefence);
-        //    _preHP = _state._CurrentHP;
-        //}
+        if (_life == null)
+        {
+            _HP.text = "";
+        }
+        else
+        {
+            _HP.text = string.Format("{0} / {1}", _life._CurHP, _life._MaxHP);
+            _preHP = _life._CurHP;
+        }
     }
 
-    public void CreateDamageFont(int damage)
+    public void CreateFont(int point, Color color)
     {
         GameObject newObj = Instantiate(_damageFontPrefab) as GameObject;
         newObj.transform.SetParent(_DamageFontPos);
@@ -78,6 +69,6 @@ public class HUD : MonoBehaviour {
         rectTF.rotation = Quaternion.identity;
         rectTF.localScale = Vector3.one;
 
-        newObj.GetComponent<DamageFont>().SetText(damage);
+        newObj.GetComponent<DamageFont>().SetText(point, color);
     }
 }

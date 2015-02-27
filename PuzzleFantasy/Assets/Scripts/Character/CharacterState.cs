@@ -34,6 +34,8 @@ public class CharacterState_Player : CharacterState_Life
     public int _CurMP;
 
     public int _Luck;
+
+    public int _Coin;
 }
 
 [System.Serializable]

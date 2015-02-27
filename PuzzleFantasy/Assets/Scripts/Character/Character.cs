@@ -20,15 +20,14 @@ public abstract class Character : MonoBehaviour
 
     [SerializeField]
     protected CharacterState_Life _life = new CharacterState_Life();
-    
+
+    public CharacterState_Life _Life
+    {
+        get { return _life; }
+    }
+
     [SerializeField]
     protected CharacterModel _Model = null;
-
-    [SerializeField]
-    protected int _PuzzlePoint = 0;
-
-    [SerializeField]
-    protected ELEMENTTYPE _AttackElement;
 
     public string _CharacterName
     {
@@ -56,36 +55,7 @@ public abstract class Character : MonoBehaviour
         _CharacterName = info._Name;
         return _Model.Initialize( info._sprite, info._controller );
     }
-
-    public void Action(NODETYPE type, int point)
-    {
-        _PuzzlePoint = point;
-        switch (type)
-        {
-            case NODETYPE.NORMALATTACK:
-                _Model.Start_Motion(MODELMOTION.NORMALATTACK);
-                _AttackElement = ELEMENTTYPE.NONE;
-                break;
-            case NODETYPE.FIREATTACK:
-                _AttackElement = ELEMENTTYPE.FIRE;
-                _Model.Start_Motion(MODELMOTION.MAGICATTACK);
-                break;
-            case NODETYPE.SNOWATTACK:
-                _AttackElement = ELEMENTTYPE.ICE;
-                _Model.Start_Motion(MODELMOTION.MAGICATTACK);
-                break;
-            case NODETYPE.FIRESNOWATTACK:
-                _AttackElement = ELEMENTTYPE.NONE;
-                _Model.Start_Motion(MODELMOTION.MAGICATTACK);
-                break;
-            case NODETYPE.HEAL:
-                _Model.Start_Motion(MODELMOTION.HEAL);
-                break;
-            case NODETYPE.COIN:
-                _Model.Start_Motion(MODELMOTION.COIN);
-                break;
-        }
-    }
+  
 
     void modelEvent(MODELMOTION motion, MOTIONEVENT motionEvent)
     {
