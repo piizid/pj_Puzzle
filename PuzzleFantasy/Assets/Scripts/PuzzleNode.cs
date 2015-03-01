@@ -7,6 +7,11 @@ public class PuzzleNode : MonoBehaviour
     static int _StateDead = Animator.StringToHash("Base Layer.Dead");
     static int _StateBorn = Animator.StringToHash("Base Layer.Born");
 
+    static NODETYPE _selectType;
+    static int _fireNodeCount;
+    static int _iceNodeCount;
+
+
     [SerializeField]
     Animator _CircleAnimator;
 
@@ -73,31 +78,72 @@ public class PuzzleNode : MonoBehaviour
         if (_isLive == false)
             return;
 
-        if (_SelectNodeStack.Count <= 0) {
+        if (_SelectNodeStack.Count <= 0)
+        {
+            _selectType = this._nodeInfo._NodeType;
+            _fireNodeCount = 0;
+            _iceNodeCount = 0;
 			select ();
-			return;
 		}
-
-        if ( _isSelect )
+        else if ( _isSelect )
         {
 			if( _SelectNodeStack.Count == 1 && _SelectNodeStack.Peek() == this )
 				return;
 
             PuzzleNode topNode = _SelectNodeStack.Pop();
             if (_SelectNodeStack.Peek() == this)
+            {
+                if (topNode._nodeInfo._NodeType == NODETYPE.FIREATTACK)
+                    _fireNodeCount--;
+                else if (topNode._nodeInfo._NodeType == NODETYPE.SNOWATTACK)
+                    _iceNodeCount--;
+
                 topNode.releaseNode();
+            }
             else
                 _SelectNodeStack.Push(topNode);
         }
-        else if( _SelectNodeStack.Peek().IsNearNode(this) &&
-                 _nodeInfo._type == _SelectNodeStack.Peek()._nodeInfo._type )
+        else if( _SelectNodeStack.Peek().IsNearNode(this) )
         {
-            select();
+            if( _nodeInfo._NodeType == _SelectNodeStack.Peek()._nodeInfo._NodeType  )
+               select();
+            else if (_selectType == NODETYPE.FIREATTACK ||
+                     _selectType == NODETYPE.SNOWATTACK ||
+                     _selectType == NODETYPE.FIRESNOWATTACK)
+            {
+                if (_nodeInfo._NodeType == NODETYPE.FIREATTACK ||
+                    _nodeInfo._NodeType == NODETYPE.SNOWATTACK)
+                {
+                    select();
+                }
+            }
+        }
+        checkMagicElement();
+    }
+
+    static void checkMagicElement()
+    {
+        if (_selectType == NODETYPE.FIREATTACK || _selectType == NODETYPE.SNOWATTACK || _selectType == NODETYPE.FIRESNOWATTACK)
+        {
+            if (_fireNodeCount > 0 && _iceNodeCount > 0)
+                _selectType = NODETYPE.FIRESNOWATTACK;
+            else if (_fireNodeCount > 0)
+                _selectType = NODETYPE.FIREATTACK;
+            else
+                _selectType = NODETYPE.SNOWATTACK;
         }
     }
 
     void select()
     {
+        if (_nodeInfo._NodeType == NODETYPE.FIREATTACK)
+            _fireNodeCount++;
+        else if (_nodeInfo._NodeType == NODETYPE.SNOWATTACK)
+            _iceNodeCount++;
+
+        if (_fireNodeCount > 0 && _iceNodeCount > 0)
+            _selectType = NODETYPE.FIRESNOWATTACK;
+
         _CircleAnimator.SetBool("Select", true);
         _SelectNodeStack.Push(this);
         _isSelect = true;
@@ -126,7 +172,7 @@ public class PuzzleNode : MonoBehaviour
                 queue.Enqueue(node);
             }
             
-            PuzzleScene._Instance.HitNodes( queue.Peek()._nodeInfo._NodeType, queue.Count );
+            PuzzleScene._Instance.HitNodes( _selectType , queue.Count );
             StartCoroutine(hit(queue));
         }
     }

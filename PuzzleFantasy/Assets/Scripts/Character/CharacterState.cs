@@ -50,4 +50,10 @@ public class CharacterState_Monster : CharacterState_Life
     public float _AttackTime;
 
     public int _RewardClass;
+
+    [HideInInspector]
+    public float _NextAttackTime;
+
+    [HideInInspector]
+    public int _AttackTurnCount;
 }

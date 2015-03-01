@@ -7,6 +7,9 @@ public class Character_Player : Character
     PlayerHUD _hud;
 
     [SerializeField]
+    CoinUI _CoinUI;
+
+    [SerializeField]
     CharacterState_Player _state;
 
     public CharacterState_Player _State
@@ -32,6 +35,9 @@ public class Character_Player : Character
 
         if (_hud != null)
             _hud.SetState(state);
+
+        if (_CoinUI != null)
+            _CoinUI.SetState(state);
 
         return base.InitializeCharacter(info, state);
     }

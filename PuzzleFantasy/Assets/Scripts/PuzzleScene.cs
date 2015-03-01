@@ -26,6 +26,7 @@ public class NodeInfo
     public NODETYPE _NodeType;
 }
 
+
 public class PuzzleScene : MonoBehaviour {
 
     [SerializeField]

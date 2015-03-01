@@ -64,8 +64,8 @@ public class BattleManager : MonoBehaviour
         _PlayerCharacter.SetTarget(_MonsterCharacter);
         _MonsterCharacter.SetTarget(_PlayerCharacter);
 
-        _PlayerCharacter._DeadEvent = this.playerDead;
-        _MonsterCharacter._DeadEvent = this.monsterDead;
+        _PlayerCharacter._MotionEvent = this.playerMotionEvent;
+        _MonsterCharacter._MotionEvent = this.monsterMotionEvent;
 
         _nextMonsterLevel = _stageInfo._StartLevel;
 
@@ -137,14 +137,26 @@ public class BattleManager : MonoBehaviour
         _nextMonsterLevel = Random.Range(_stageInfo._MinMonsterLevelUp, _stageInfo._MaxMonsterLevelUp + 1);
     }
 
-    void playerDead()
+    void playerMotionEvent( MODELMOTION motion , MOTIONEVENT motionEvent )
     {
-
+        if (motion != MODELMOTION.IDLE && motionEvent == MOTIONEVENT.END)
+            _MonsterCharacter.PlayerMotionEnd();
     }
 
     void StageClear()
     {
 
+    }
+
+    void monsterMotionEvent(MODELMOTION motion, MOTIONEVENT motionEvent )
+    {
+        switch (motion)
+        {
+            case MODELMOTION.DEAD:
+                if( motionEvent != MOTIONEVENT.START )
+                    monsterDead();
+                break;
+        }
     }
 
     void monsterDead()

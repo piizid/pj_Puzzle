@@ -30,7 +30,7 @@ public class HUD : MonoBehaviour {
         _DamageFontPos.DetachChildren();
     }
 
-    void Update()
+    protected void Update()
     {
         if (_life == null)
         {

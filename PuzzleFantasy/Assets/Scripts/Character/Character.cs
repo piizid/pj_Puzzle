@@ -12,11 +12,8 @@ public class CharacterInfo
 
 public abstract class Character : MonoBehaviour 
 {
-    public delegate void DeadEvent();
-    public DeadEvent _DeadEvent;
-
-    public delegate void HitEndEvent();
-    public HitEndEvent _HitEndEvent;
+    public delegate void MotionEvent(MODELMOTION motion, MOTIONEVENT motionEvent);
+    public MotionEvent _MotionEvent;
 
     [SerializeField]
     protected CharacterState_Life _life = new CharacterState_Life();
@@ -59,45 +56,14 @@ public abstract class Character : MonoBehaviour
 
     void modelEvent(MODELMOTION motion, MOTIONEVENT motionEvent)
     {
-        switch( motion )
-        {
-            case MODELMOTION.DEAD:
-                deadEvent( motionEvent );
-                break;
-            case MODELMOTION.HIT:
-                hitEvent( motionEvent );
-                break;
-        }
         ModelEvent(motion, motionEvent);
+        if (_MotionEvent != null)
+            _MotionEvent(motion, motionEvent);
     }
 
     abstract protected void ModelEvent(MODELMOTION motion, MOTIONEVENT motionEvent);
 
-    void hitEvent(MOTIONEVENT motionEvent)
-    {
-        switch (motionEvent)
-        {
-            case MOTIONEVENT.END:
-                {
-                    if (_HitEndEvent != null)
-                        _HitEndEvent();
-                }
-                break;
-        }
-    }
 
-    void deadEvent(MOTIONEVENT motionEvent)
-    {
-        switch (motionEvent)
-        {
-            case MOTIONEVENT.EVENT:
-                {
-                    if (_DeadEvent != null)
-                        _DeadEvent();
-                }
-                break;
-        }
-    }
 
     protected void hit( int attackPoint )
     {
