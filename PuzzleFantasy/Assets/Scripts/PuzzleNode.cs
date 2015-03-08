@@ -58,7 +58,7 @@ public class PuzzleNode : MonoBehaviour
 
             foreach (var hit in hits)
             {
-                if (hit.collider == collider2D)
+                if (hit.collider == GetComponent<Collider2D>())
                     continue;
 
                 PuzzleNode node = hit.collider.gameObject.GetComponent<PuzzleNode>();
