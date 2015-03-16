@@ -24,7 +24,7 @@ public class StateInfo
     public int _MaxTurn;
 }
 
-public class CharacterCreater :MonoBehaviour {
+public class CharacterCreater : Singleton< CharacterCreater > {
     StageCharacterInfo _characterInfo;
 
     [SerializeField]
@@ -33,24 +33,11 @@ public class CharacterCreater :MonoBehaviour {
     [SerializeField]
     StateInfo _BossCharacterState;
 
-    static CharacterCreater _instance = null;
-    public static  CharacterCreater _Instance
-    {
-        get
-        {
-            return _instance;
-        }
-    }
-
     public void SetStageCharacterInfo(StageCharacterInfo info)
     {
         _characterInfo = info;
     }
-
-    void Awake()
-    {
-        _instance = this;
-    }
+    
 
     public CharacterState_Monster GetNewState(int level, bool boss )
     {

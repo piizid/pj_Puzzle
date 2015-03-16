@@ -324,7 +324,7 @@ GameObject:
   - 4: {fileID: 78551190}
   - 114: {fileID: 78551189}
   m_Layer: 0
-  m_Name: SceneManager
+  m_Name: '[ SceneManager ]'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3708,7 +3708,7 @@ GameObject:
   - 4: {fileID: 1237143330}
   - 114: {fileID: 1237143329}
   m_Layer: 0
-  m_Name: CharacterCreater
+  m_Name: '[ CharacterCreater ]'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4964,7 +4964,7 @@ GameObject:
   - 4: {fileID: 1590100287}
   - 114: {fileID: 1590100286}
   m_Layer: 0
-  m_Name: StageTable
+  m_Name: '[ StageTable ]'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -30,20 +30,8 @@ public class StageInfo
     public StageCharacterInfo _spriteInfos;
 }
 
-public class StageTable : MonoBehaviour  {
-    static StageTable _instance;
-    public static StageTable _Instance
-    {
-        get { return _instance;  }
-    }
-
+public class StageTable : Singleton< StageTable >  {
     public StageInfo[] _StageInfoList;
-
-    void Awake()
-    {
-        _instance = this;
-    }
-
 
     public StageInfo GetStageInfo(string stageName)
     {

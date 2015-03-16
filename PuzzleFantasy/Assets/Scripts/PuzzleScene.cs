@@ -27,7 +27,7 @@ public class NodeInfo
 }
 
 
-public class PuzzleScene : MonoBehaviour {
+public class PuzzleScene : Singleton< PuzzleScene > {
 
     [SerializeField]
     BattleManager _battleManager;
@@ -35,9 +35,6 @@ public class PuzzleScene : MonoBehaviour {
     public string _testStage;
     public CharacterState_Player _testPlayerState;
     public CharacterInfo _testInfo;
-
-    static PuzzleScene _instance = null;
-    public static PuzzleScene _Instance { get { return _instance; } }
 
     List<PuzzleNode> _puzzleNodeList = new List<PuzzleNode>();
 
@@ -49,21 +46,13 @@ public class PuzzleScene : MonoBehaviour {
 
     bool _puzzlePlaying = false;
 
-    void Awake()
+    void Start()
     {
-        if (_instance != null)
-            Destroy(gameObject);
-        else
-            _instance = this;
-
         for (int i = 0; i < _NodeTypeList.Length; i++)
             _NodeTypeList[i]._type = i;
 
         _battleManager._phaseChangeEvent = this.battlePhaseChange;
-    }
 
-    void Start()
-    {
         _battleManager.Initialize(_testStage, _testInfo, _testPlayerState);
     }
 
