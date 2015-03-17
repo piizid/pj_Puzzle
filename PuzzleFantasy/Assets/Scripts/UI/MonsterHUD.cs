@@ -41,7 +41,7 @@ public class MonsterHUD : HUD {
         _AttackTime.text = text;
     }
 
-    void Update()
+    new void Update()
     {
         base.Update();
         setTime();

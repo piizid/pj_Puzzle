@@ -17,11 +17,9 @@ public enum NODETYPE
 public class NodeInfo
 {
     public string _Name;
-    [HideInInspector]
-    public int _type;
 
     public GameObject _prefab;
-
+    public int _Count = 1;
 
     public NODETYPE _NodeType;
 }
@@ -46,20 +44,37 @@ public class PuzzleScene : Singleton< PuzzleScene > {
 
     bool _puzzlePlaying = false;
 
+    NodeInfo[] _randomNodeinfo = null;
+
     void Start()
     {
-        for (int i = 0; i < _NodeTypeList.Length; i++)
-            _NodeTypeList[i]._type = i;
-
+        createRandomNodeInfo();
         _battleManager._phaseChangeEvent = this.battlePhaseChange;
-
         _battleManager.Initialize(_testStage, _testInfo, _testPlayerState);
+    }
+
+    void createRandomNodeInfo()
+    {
+        int count = 0;
+        foreach (var info in _NodeTypeList)
+            count += info._Count;
+
+        _randomNodeinfo = new NodeInfo[count];
+
+        int index = 0;
+        foreach (var info in _NodeTypeList)
+        {
+            for (int i = 0; i < info._Count; i++, index++)
+            {
+                _randomNodeinfo[index] = info;
+            }
+        }
     }
 
     public NodeInfo GetRandomNode()
     {
-        int type = Random.Range(0, _NodeTypeList.Length);
-        return _NodeTypeList[type];
+        int type = Random.Range(0, _randomNodeinfo.Length);
+        return _randomNodeinfo[type];
     }
 
     public void AddPuzzleNode( PuzzleNode node )

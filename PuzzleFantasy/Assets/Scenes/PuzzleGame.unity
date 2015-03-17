@@ -360,48 +360,24 @@ MonoBehaviour:
     _controller: {fileID: 9100000, guid: c8a492fb24c1a934fbed0e9dc3971f27, type: 2}
   _NodeTypeList:
   - _Name: Attack
-    _type: 0
     _prefab: {fileID: 162062, guid: 86c56779b23d4db49bd420f5932022ea, type: 2}
-    _NodeType: 0
-  - _Name: Attack
-    _type: 0
-    _prefab: {fileID: 162062, guid: 86c56779b23d4db49bd420f5932022ea, type: 2}
-    _NodeType: 0
-  - _Name: Attack
-    _type: 0
-    _prefab: {fileID: 162062, guid: 86c56779b23d4db49bd420f5932022ea, type: 2}
+    _Count: 10
     _NodeType: 0
   - _Name: Fire
-    _type: 0
     _prefab: {fileID: 170842, guid: 436685987b61eb642913afc1c3196322, type: 2}
-    _NodeType: 1
-  - _Name: Fire
-    _type: 0
-    _prefab: {fileID: 170842, guid: 436685987b61eb642913afc1c3196322, type: 2}
+    _Count: 6
     _NodeType: 1
   - _Name: Snow
-    _type: 0
     _prefab: {fileID: 198452, guid: e901e0cd14e9db64a83709b74ca20f3c, type: 2}
-    _NodeType: 2
-  - _Name: Snow
-    _type: 0
-    _prefab: {fileID: 198452, guid: e901e0cd14e9db64a83709b74ca20f3c, type: 2}
+    _Count: 6
     _NodeType: 2
   - _Name: Coin
-    _type: 0
     _prefab: {fileID: 107812, guid: 77356b39df6c4df47afd0ff4487a4f7e, type: 2}
-    _NodeType: 4
-  - _Name: Coin
-    _type: 0
-    _prefab: {fileID: 107812, guid: 77356b39df6c4df47afd0ff4487a4f7e, type: 2}
+    _Count: 5
     _NodeType: 4
   - _Name: Heal
-    _type: 0
     _prefab: {fileID: 165862, guid: 17a23841d7bba424585eb9dca6ee48d3, type: 2}
-    _NodeType: 3
-  - _Name: Heal
-    _type: 0
-    _prefab: {fileID: 165862, guid: 17a23841d7bba424585eb9dca6ee48d3, type: 2}
+    _Count: 5
     _NodeType: 3
   _LinePrefab: {fileID: 140928, guid: 850f4915ca1ce5342ae7857823552f34, type: 2}
   _CirclePrefab: {fileID: 153362, guid: f7f0b85c06fed41fc8c52b2d1a990b63, type: 2}

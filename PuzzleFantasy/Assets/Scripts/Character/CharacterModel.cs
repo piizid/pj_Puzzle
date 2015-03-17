@@ -22,13 +22,13 @@ public enum MOTIONEVENT
 
 
 public class CharacterModel : MonoBehaviour {
-    static int CODE_IDLE = Animator.StringToHash("Base Layer.IDLE");
-    static int CODE_NORMALATTACK = Animator.StringToHash("Base Layer.NormalAttack");
-    static int CODE_MAGICATTACK = Animator.StringToHash("Base Layer.MagicAttack");
-    static int CODE_HEAL = Animator.StringToHash("Base Layer.Heal");
-    static int CODE_COIN = Animator.StringToHash("Base Layer.Coin");
-    static int CODE_HIT = Animator.StringToHash("Base Layer.Hit");
-    static int CODE_DEAD = Animator.StringToHash("Base Layer.Dead");
+    static int CODE_IDLE = Animator.StringToHash("IDLE");
+    static int CODE_NORMALATTACK = Animator.StringToHash("NormalAttack");
+    static int CODE_MAGICATTACK = Animator.StringToHash("MagicAttack");
+    static int CODE_HEAL = Animator.StringToHash("Heal");
+    static int CODE_COIN = Animator.StringToHash("Coin");
+    static int CODE_HIT = Animator.StringToHash("Hit");
+    static int CODE_DEAD = Animator.StringToHash("Dead");
 
     const string TRIGGER_NORMALATTACK = "NormalAttack";
     const string TRIGGER_MAGICATTACK = "MagicAttack";
@@ -56,7 +56,7 @@ public class CharacterModel : MonoBehaviour {
 
     void Start()
     {
-        _preAnimatorCode = _anim.GetCurrentAnimatorStateInfo(0).nameHash;
+        _preAnimatorCode = _anim.GetCurrentAnimatorStateInfo(0).shortNameHash;
     }
 
     public bool Initialize( Sprite sprite , RuntimeAnimatorController controller )
@@ -73,24 +73,14 @@ public class CharacterModel : MonoBehaviour {
         return true;
     }
 
-    void Update()
-    {
-        int currentCode = _anim.GetCurrentAnimatorStateInfo(0).nameHash;
-
-        if (_preAnimatorCode != currentCode)
-        {
-            stateChange(_preAnimatorCode, currentCode);
-            _preAnimatorCode = currentCode;
-        }
-    }
-
     void stateChange(int preCode, int curCode)
     {
-        if (_MotionEvent == null)
-            return;
-
-        _MotionEvent(getMotion(preCode), MOTIONEVENT.END);
-        _MotionEvent(getMotion(curCode), MOTIONEVENT.START);
+        if (_MotionEvent != null)
+        {
+            _MotionEvent(getMotion(preCode), MOTIONEVENT.END);
+            _MotionEvent(getMotion(curCode), MOTIONEVENT.START);
+        }
+        _preAnimatorCode = curCode;
     }
 
     MODELMOTION getMotion(int code)
@@ -116,18 +106,24 @@ public class CharacterModel : MonoBehaviour {
             case MODELMOTION.COIN:         triggerName = TRIGGER_Coin;      break;
             case MODELMOTION.HIT:          triggerName = TRIGGER_Hit;          break;
             case MODELMOTION.DEAD:         triggerName = TRIGGER_Dead;         break;
+            default:
+                return;
         }
         _anim.SetTrigger(triggerName);
     }
   
     public void MotionEvent()
     {
-//        Debug.Log("event");
-        _MotionEvent(getMotion(_anim.GetCurrentAnimatorStateInfo(0).nameHash), MOTIONEVENT.EVENT);
+        _MotionEvent(getMotion(_anim.GetCurrentAnimatorStateInfo(0).shortNameHash), MOTIONEVENT.EVENT);
     }
 
     void testLog(MODELMOTION motion, MOTIONEVENT motionEvent)
     {
         Debug.Log(motion.ToString() + "Motion, " + motionEvent.ToString());
+    }
+
+    public void onStateEnter(int newStateCode)
+    {
+        stateChange( _preAnimatorCode, newStateCode );
     }
 }

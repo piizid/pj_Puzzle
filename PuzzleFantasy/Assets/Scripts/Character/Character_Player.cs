@@ -171,8 +171,7 @@ public class Character_Player : Character
     }
 
 
-
-    public void hit(int attackPoint)
+    public new void hit(int attackPoint)
     {
         _hud.CreateFont(attackPoint, Color.yellow);
 

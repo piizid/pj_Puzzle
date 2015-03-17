@@ -20,7 +20,7 @@ public class PlayerHUD : HUD {
         base.SetLife(state);
     }
 
-    public void Update()
+    new public void Update()
     {
         base.Update();
 

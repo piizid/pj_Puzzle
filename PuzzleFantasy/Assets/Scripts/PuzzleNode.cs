@@ -37,7 +37,7 @@ public class PuzzleNode : MonoBehaviour
     IEnumerator Start()
     {
         yield return null;
-        _preAnimatorState = _CircleAnimator.GetCurrentAnimatorStateInfo(0).nameHash;
+        _preAnimatorState = _CircleAnimator.GetCurrentAnimatorStateInfo(0).fullPathHash;
         findNearNode();
 
         PuzzleScene._Instance.AddPuzzleNode(this);
@@ -197,7 +197,7 @@ public class PuzzleNode : MonoBehaviour
 
     void Update()
     {
-        int currentState = _CircleAnimator.GetCurrentAnimatorStateInfo(0).nameHash;
+        int currentState = _CircleAnimator.GetCurrentAnimatorStateInfo(0).fullPathHash;
 
         if (_preAnimatorState == _StateDead && currentState == _StateBorn)
         {
@@ -232,12 +232,14 @@ public class PuzzleNode : MonoBehaviour
 
     public void NodeStart()
     {
+        _CircleAnimator.ResetTrigger("Dead");
         _CircleAnimator.SetTrigger("Born");
         _CircleAnimator.SetBool("Loop", true );
     }
 
     public void NodeEnd()
     {
+        _CircleAnimator.ResetTrigger("Born");
         _CircleAnimator.SetTrigger("Dead");
         _CircleAnimator.SetBool("Loop", false);
     }
