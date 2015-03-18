@@ -158,7 +158,8 @@ public class Character_Player : Character
     {
         int attackPoint;
         int criticalPoint;
-        Character_Player.GetAttackPoint(_State, _target._State, _PuzzlePoint, _MagicAttack, _AttackElement, out attackPoint, out criticalPoint);
+        float elementRate;
+        Character_Player.GetAttackPoint(_State, _target._State, _PuzzlePoint, _MagicAttack, _AttackElement, out attackPoint, out criticalPoint, out elementRate);
 
         bool critical = false;
         if (Random.Range(0, 101) <= criticalPoint)
@@ -178,14 +179,14 @@ public class Character_Player : Character
         base.hit(attackPoint);
     }
 
-
     static public bool GetAttackPoint(CharacterState_Player player,
                                       CharacterState_Monster monster,
                                       int puzzlePoint, bool magicAttack, ELEMENTTYPE attackType,
-                                      out int outAttackPoint, out int outCritcalPoint)
+                                      out int outAttackPoint, out int outCritcalPoint, out float outElementRate)
     {
         outAttackPoint = 0;
         outCritcalPoint = 0;
+        outElementRate = 1.0f;
 
         if (player == null || monster == null)
             return false;
@@ -194,7 +195,8 @@ public class Character_Player : Character
         if (magicAttack)
         {
             attackPoint *= player._MagicAttack;
-            attackPoint *= ElementRate(monster._ElementType, attackType);
+            outElementRate = ElementRate(monster._ElementType, attackType);
+            attackPoint *= outElementRate;
         }
         else
         {
@@ -239,5 +241,4 @@ public class Character_Player : Character
 
         return true;
     }
-   
 }

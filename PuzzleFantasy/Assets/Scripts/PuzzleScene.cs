@@ -24,6 +24,12 @@ public class NodeInfo
     public NODETYPE _NodeType;
 }
 
+[System.Serializable]
+public class NodeIconSprite
+{
+    public NODETYPE _Type;
+    public Sprite _Sprite;
+}
 
 public class PuzzleScene : Singleton< PuzzleScene > {
 
@@ -45,7 +51,7 @@ public class PuzzleScene : Singleton< PuzzleScene > {
     bool _puzzlePlaying = false;
 
     NodeInfo[] _randomNodeinfo = null;
-
+    public NodeIconSprite[] _NodeIconSprite;
     void Start()
     {
         createRandomNodeInfo();
@@ -150,5 +156,12 @@ public class PuzzleScene : Singleton< PuzzleScene > {
         yield return new WaitForSeconds(0.1f);
         PuzzleStart();
     }
-  
+
+    public Sprite GetNodeIconSprite(NODETYPE type)
+    {
+        foreach (var info in _NodeIconSprite)
+            if (info._Type == type) return info._Sprite;
+        return null;
+    }
+      
 }

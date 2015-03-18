@@ -12,7 +12,7 @@ public enum BATTLEPHASE
 
 
 
-public class BattleManager : MonoBehaviour
+public class BattleManager : Singleton< BattleManager >
 {
     public delegate void PhaseChange(BATTLEPHASE pase);
     public PhaseChange _phaseChangeEvent;
@@ -34,7 +34,12 @@ public class BattleManager : MonoBehaviour
 
     BackGround _backGround;
 
-    BATTLEPHASE _Phase = BATTLEPHASE.BATTLESTART;
+    BATTLEPHASE _phase = BATTLEPHASE.BATTLESTART;
+    public BATTLEPHASE _Phase
+    {
+        get { return _phase; }
+    }
+
 
     StageInfo _stageInfo;
 
@@ -103,7 +108,7 @@ public class BattleManager : MonoBehaviour
 
         if (_phaseChangeEvent != null)
             _phaseChangeEvent(newPhase);
-        _Phase = newPhase;
+        _phase = newPhase;
         if (newPhase == BATTLEPHASE.MOVE)
             _moveStartTime = Time.time;
     }
@@ -139,7 +144,7 @@ public class BattleManager : MonoBehaviour
 
     void playerMotionEvent( MODELMOTION motion , MOTIONEVENT motionEvent )
     {
-        if (motion != MODELMOTION.IDLE && motionEvent == MOTIONEVENT.END)
+        if ((motion != MODELMOTION.IDLE && motion != MODELMOTION.HIT) && motionEvent == MOTIONEVENT.END)
             _MonsterCharacter.PlayerMotionEnd();
     }
 
@@ -176,4 +181,22 @@ public class BattleManager : MonoBehaviour
     {
         _PlayerCharacter.Action(type, count);
     }
+
+    public bool GetAttackPoint(int puzzlePoint, bool magicAttack, ELEMENTTYPE attackType, out int outAttackPoint, out int outCriticalPoint, out float outElementRate)
+    {
+        return Character_Player.GetAttackPoint( _PlayerCharacter._State, _MonsterCharacter._State, puzzlePoint, magicAttack, attackType, out outAttackPoint, out outCriticalPoint, out outElementRate);
+    }
+
+    public bool GetHealPoint(int puzzlePoint, out int outHealPoint)
+    {
+        return Character_Player.GetHealPoint(_PlayerCharacter._State, puzzlePoint, out outHealPoint);
+    }
+
+    public bool GetCoinPoint(int puzzlePoint, out int outCointPoint)
+    {
+        return Character_Player.GetCoinPoint(_PlayerCharacter._State, puzzlePoint, out outCointPoint);
+    }
+
+    public int _CurrentStateNum { get { return _currentStage; } }
+    public int _MaxStateNum { get { if (_stageInfo != null) return _stageInfo._StageCount; return 0; } }
 }

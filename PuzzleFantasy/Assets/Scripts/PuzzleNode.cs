@@ -10,6 +10,17 @@ public class PuzzleNode : MonoBehaviour
     static NODETYPE _selectType;
     static int _fireNodeCount;
     static int _iceNodeCount;
+    static Stack<PuzzleNode> _SelectNodeStack = new Stack<PuzzleNode>();
+
+    public static bool GetHitNodes( out NODETYPE type, out int count )
+    {
+        type = _selectType;
+        count = _SelectNodeStack.Count;
+
+        if (count > 0)
+            return true;
+        return false;
+    }
 
 
     [SerializeField]
@@ -20,8 +31,6 @@ public class PuzzleNode : MonoBehaviour
    
     [SerializeField]
     List<PuzzleNode> _LearPuzzleNodeList = new List<PuzzleNode>();
-
-    static Stack<PuzzleNode> _SelectNodeStack = new Stack<PuzzleNode>();
 
     NodeInfo _nodeInfo;
 
