@@ -4,6 +4,25 @@ using System.Collections.Generic;
 
 public class PuzzleNode : MonoBehaviour
 {
+    enum PUZZLENODESIDE 
+    {
+        Top,
+        Top_Right,
+        Down_Right,
+        Down,
+        Down_Left,
+        Top_Left,
+    }
+
+    enum NODESTATE
+    {
+        Idle,
+        Select,
+        Empty,
+        Recv,
+        Create,
+    }
+
     static int _StateDead = Animator.StringToHash("Base Layer.Dead");
     static int _StateBorn = Animator.StringToHash("Base Layer.Born");
 
@@ -55,7 +74,7 @@ public class PuzzleNode : MonoBehaviour
     void findNearNode()
     {
         Vector3 dir = Vector3.up;
-        Quaternion quat = Quaternion.Euler(0.0f, 0.0f, 60.0f);
+        Quaternion quat = Quaternion.Euler(0.0f, 0.0f, -60.0f);
         RaycastHit2D[] hits;
         for (int i = 0; i < 6; i++)
         {
