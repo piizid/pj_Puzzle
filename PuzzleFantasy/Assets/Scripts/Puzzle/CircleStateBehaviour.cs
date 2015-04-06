@@ -26,6 +26,7 @@ public class CircleStateBehaviour : StateMachineBehaviour {
         if (code == code_Born) return PuzzleCircle.CIRCLESTATE.Create;
         if (code == code_DestoryStart) return PuzzleCircle.CIRCLESTATE.DestroyStart;
         if (code == code_Select) return PuzzleCircle.CIRCLESTATE.Select;
+        if (code == code_Destory) return PuzzleCircle.CIRCLESTATE.DestroyEnd;
         return PuzzleCircle.CIRCLESTATE.DestroyEnd;
     }
 

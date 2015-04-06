@@ -31,7 +31,7 @@ public class NodeIconSprite
     public Sprite _Sprite;
 }
 
-public class PuzzleScene : Singleton< PuzzleScene > {
+public class PuzzleScene : Singleton_Scene< PuzzleScene > {
 
     [SerializeField]
     BattleManager _battleManager;

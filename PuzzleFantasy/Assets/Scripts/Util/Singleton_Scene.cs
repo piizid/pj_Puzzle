@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class Singleton< T > : MonoBehaviour  where T : MonoBehaviour
+public abstract class Singleton_Scene< T > : MonoBehaviour  where T : MonoBehaviour
 {
     static bool _isShutdown = false;
     static T _instance = null;
@@ -26,14 +26,18 @@ public abstract class Singleton< T > : MonoBehaviour  where T : MonoBehaviour
 
     void Awake()
     {
-        if( _instance != null )
+        init_Singleton();
+        onAwakeEnd();
+    }
+
+    protected void init_Singleton()
+    {
+        if (_instance != null)
         {
             Destroy(gameObject);
             return;
         }
-        
         _instance = this as T;
-        onAwakeEnd();
     }
 
     virtual protected void onAwakeEnd()
@@ -49,5 +53,15 @@ public abstract class Singleton< T > : MonoBehaviour  where T : MonoBehaviour
 
     virtual protected void onApplicationQuitEnd()
     {
+    }
+}
+
+public abstract class Singleton_App<T> : Singleton_Scene<T> where T : MonoBehaviour
+{
+    void Awake()
+    {
+        init_Singleton();
+        DontDestroyOnLoad(gameObject);
+        onAwakeEnd();
     }
 }

@@ -12,7 +12,7 @@ public enum BATTLEPHASE
 
 
 
-public class BattleManager : Singleton< BattleManager >
+public class BattleManager : Singleton_Scene< BattleManager >
 {
     public delegate void PhaseChange(BATTLEPHASE pase);
     public PhaseChange _phaseChangeEvent;

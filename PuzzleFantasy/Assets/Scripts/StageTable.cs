@@ -30,7 +30,7 @@ public class StageInfo
     public StageCharacterInfo _spriteInfos;
 }
 
-public class StageTable : Singleton< StageTable >  {
+public class StageTable : Singleton_Scene< StageTable >  {
     public StageInfo[] _StageInfoList;
 
     public StageInfo GetStageInfo(string stageName)

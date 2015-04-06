@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class PuzzleHitHud : Singleton< PuzzleHitHud > {
+public class PuzzleHitHud : Singleton_Scene< PuzzleHitHud > {
 
     [SerializeField]
     Text _text;

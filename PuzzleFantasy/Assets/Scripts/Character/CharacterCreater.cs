@@ -24,7 +24,7 @@ public class StateInfo
     public int _MaxTurn;
 }
 
-public class CharacterCreater : Singleton< CharacterCreater > {
+public class CharacterCreater : Singleton_Scene< CharacterCreater > {
     StageCharacterInfo _characterInfo;
 
     [SerializeField]
